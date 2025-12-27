@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# このファイルがあるディレクトリの親ディレクトリの translator.py を実行する
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+python3 $SCRIPT_DIR/../translator.py "$@"
