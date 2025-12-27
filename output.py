@@ -7,6 +7,7 @@ from type import (
     Label,
     ModifiedTransition,
     TransitionForDTMC,
+    TransitionForMDP,
     TransitionForCTMC,
 )
 
@@ -65,6 +66,24 @@ def output_dtmc(n: int, t: int, prob_transitions: List[TransitionForDTMC]) -> No
     for from_state, to_state, prob in sorted(prob_transitions):
         prob_str = round_sig_6(prob)
         output_lines.append(f"{from_state} {to_state} {prob_str}")
+
+    # Print output
+    print("\n".join(output_lines))
+
+
+def output_mdp(n: int, t: int, mdp_transitions: List[TransitionForMDP]) -> None:
+    """
+    MDP遷移確率データを指定された形式で出力します。
+
+    Args:
+        mdp_transitions (List[TransitionForMDP]): MDP遷移系
+    """
+    # Prepare output
+    output_lines = []
+    output_lines.append(f"{n} {t}")
+    for from_state, choice_id, to_state, prob in sorted(mdp_transitions):
+        prob_str = round_sig_6(prob)
+        output_lines.append(f"{from_state} {choice_id} {to_state} {prob_str}")
 
     # Print output
     print("\n".join(output_lines))

@@ -5,12 +5,14 @@ from modifier import normalize, modify_transitions
 from transition_generator import (
     generate_transitions_adjacency_list,
     generate_dtmc,
+    generate_mdp,
     generate_ctmc,
 )
 from output import (
     output_results,
     output_modified_results,
     output_dtmc,
+    output_mdp,
     output_ctmc,
     output_labels,
     output_trew,
@@ -112,7 +114,23 @@ def main() -> None:
                         output_trew(t, transitions_with_info)
                         sys.stdout = sys.__stdout__  # Reset stdout
             elif args.model_type == "mdp":
-                print("MDP output not implemented yet.", file=sys.stderr)
+                mdp_transitions = generate_mdp(transitions)
+
+                if args.tra:
+                    with open(args.tra, "w") as f:
+                        sys.stdout = f  # Redirect stdout to file
+                        output_mdp(n, t, mdp_transitions)
+                        sys.stdout = sys.__stdout__  # Reset stdout
+                else:
+                    output_mdp(n, t, mdp_transitions)
+
+                if args.lab:
+                    with open(args.lab, "w") as f:
+                        sys.stdout = f  # Redirect stdout to file
+                        output_labels(labels)
+                        sys.stdout = sys.__stdout__  # Reset stdout
+                else:
+                    output_labels(labels)
             elif args.model_type == "ctmc":
                 ctmc_transitions = generate_ctmc(transitions)
 

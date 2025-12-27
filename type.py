@@ -27,5 +27,7 @@ class AdjacencyItem:
 TransitionsAdjacencyList = Dict[
     int, List[AdjacencyItem]
 ]  # from_state -> List of (to_state, weight, match_count)
+
 TransitionForDTMC = Tuple[int, int, float]  # (from_state, to_state, probability)
+TransitionForMDP = Tuple[int, int, int, float] # (from_state, choice_id, to_state, probability)
 TransitionForCTMC = Tuple[int, int, float]  # (from_state, to_state, rate)
