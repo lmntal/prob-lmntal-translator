@@ -189,7 +189,7 @@ def output_dtmc_for_state_viewer(
         prob_map[(from_state, to_state)] = prob
 
     # Print modified transitions with new state IDs, sorted by source and destination IDs
-    for src, dest, _, _, rule_name, _, _, _ in transitions:
+    for src, dest, _, rule_name, _, _, _, _ in transitions:
         prob_str = round_sig_6(prob_map.get((src, dest), 0.0))
         print(f"{src} {dest} {rule_name} {prob_str}")
 
