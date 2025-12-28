@@ -81,7 +81,7 @@ def output_mdp(n: int, t: int, mdp_transitions: List[TransitionForMDP]) -> None:
     # Prepare output
     output_lines = []
     output_lines.append(f"{n} {t}")
-    for from_state, choice_id, to_state, prob in sorted(mdp_transitions):
+    for from_state, choice_id, to_state, prob, _ in sorted(mdp_transitions):
         prob_str = round_sig_6(prob)
         output_lines.append(f"{from_state} {choice_id} {to_state} {prob_str}")
 
@@ -162,12 +162,12 @@ def output_trew(t: int, transitions: List[ModifiedTransition]) -> None:
     print(f"{t} {len(trew)}\n" + "\n".join(trew))
 
 
-def output_for_state_viewer(
+def output_dtmc_for_state_viewer(
     n: int,
     t: int,
     transitions: List[ModifiedTransition],
     states: List[State],
-    prob_transitions: List[TransitionForDTMC],
+    dtmc_transitions: List[TransitionForDTMC],
     labels: List[Label],
 ) -> None:
     """
@@ -185,7 +185,7 @@ def output_for_state_viewer(
 
     # (src, dest) -> probability map
     prob_map: Dict[Tuple[int, int], float] = {}
-    for from_state, to_state, prob in prob_transitions:
+    for from_state, to_state, prob in dtmc_transitions:
         prob_map[(from_state, to_state)] = prob
 
     # Print modified transitions with new state IDs, sorted by source and destination IDs
@@ -193,6 +193,71 @@ def output_for_state_viewer(
         prob_str = round_sig_6(prob_map.get((src, dest), 0.0))
         print(f"{src} {dest} {rule_name} {prob_str}")
 
+    # Print states with new state IDs, sorted by new state ID
+    printStates(labels, states)
+
+
+def output_mdp_for_state_viewer(
+    n: int,
+    t: int,
+    transitions: List[ModifiedTransition],
+    states: List[State],
+    mdp_transitions: List[TransitionForMDP],
+    labels: List[Label],
+) -> None:
+    """
+    状態ビューア用のMDP出力を生成します。
+    """
+    print(f"{n} {t}")
+
+    # (src, action, dest) -> probability map
+    prob_map: Dict[Tuple[int, str, int], float] = {}
+    for from_state, _, to_state, prob, action in mdp_transitions:
+        prob_map[(from_state, action, to_state)] = prob
+
+    # Print modified transitions with new state IDs, sorted by source and destination IDs
+    for src, dest, _, rule_name, action, _, _, _ in transitions:
+        prob_str = round_sig_6(prob_map.get((src, action, dest), 0.0))
+        print(f"{src} {dest} {rule_name} {action},{prob_str}")
+
+    # Print states with new state IDs, sorted by new state ID
+    printStates(labels, states)
+
+
+def output_ctmc_for_state_viewer(
+    n: int,
+    t: int,
+    transitions: List[ModifiedTransition],
+    states: List[State],
+    ctmc_transitions: List[TransitionForCTMC],
+    labels: List[Label],
+) -> None:
+    """
+    状態ビューア用のCTMC出力を生成します。
+    """
+    print(f"{n} {t}")
+
+    # (src, dest) -> rate map
+    rate_map: Dict[Tuple[int, int], float] = {}
+    for from_state, to_state, rate in ctmc_transitions:
+        rate_map[(from_state, to_state)] = rate
+
+    # Print modified transitions with new state IDs, sorted by source and destination IDs
+    for src, dest, _, rule_name, _, _, _, _ in transitions:
+        print(f"{src} {dest} {rule_name} {rate_map.get((src, dest), 1.0)}")
+
+    # Print states with new state IDs, sorted by new state ID
+    printStates(labels, states)
+
+
+def printStates(labels: List[Label], states: List[State]) -> None:
+    """
+    状態とラベルを標準出力に出力します。
+
+    Args:
+        labels (List[Label]): ラベルデータ
+        states (List[State]): 状態データ
+    """
     # label Dictionary
     label_map: Dict[int, List[str]] = {}
     for state_id, label in labels:

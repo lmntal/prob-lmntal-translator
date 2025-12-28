@@ -16,7 +16,9 @@ from output import (
     output_ctmc,
     output_labels,
     output_trew,
-    output_for_state_viewer,
+    output_dtmc_for_state_viewer,
+    output_mdp_for_state_viewer,
+    output_ctmc_for_state_viewer,
 )
 from type import (
     TransitionsAdjacencyList,
@@ -159,16 +161,18 @@ def main() -> None:
             )
             if args.model_type == "dtmc":
                 dtmc_transitions = generate_dtmc(transitions)
-                output_for_state_viewer(
+                output_dtmc_for_state_viewer(
                     n, t, transitions_with_info, states, dtmc_transitions, labels
                 )
             elif args.model_type == "mdp":
-                print(
-                    "MDP output for state viewer not implemented yet.", file=sys.stderr
+                mdp_transitions = generate_mdp(transitions)
+                output_mdp_for_state_viewer(
+                    n, t, transitions_with_info, states, mdp_transitions, labels
                 )
             elif args.model_type == "ctmc":
-                print(
-                    "CTMC output for state viewer not implemented yet.", file=sys.stderr
+                ctmc_transitions = generate_ctmc(transitions)
+                output_ctmc_for_state_viewer(
+                    n, t, transitions_with_info, states, ctmc_transitions, labels
                 )
         else:
             print("Error: No valid output option provided.", file=sys.stderr)

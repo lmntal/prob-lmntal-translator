@@ -94,7 +94,15 @@ def generate_mdp(
             )
             for adjacency in adjacencyList:
                 prob = (adjacency.weight * adjacency.count) / total_weight
-                mdp_transitions.append((from_state, choiceId, adjacency.dest, prob))
+                mdp_transitions.append(
+                    (
+                        from_state,
+                        choiceId,
+                        adjacency.dest,
+                        prob,
+                        choiceId2action[choiceId],
+                    )
+                )
 
     return mdp_transitions
 
