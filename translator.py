@@ -1,5 +1,6 @@
 import sys
 import argparse
+import os
 from parse_input import parse_input
 from modifier import normalize, modify_transitions
 from transition_generator import (
@@ -95,6 +96,7 @@ def main() -> None:
                 dtmc_transitions = generate_dtmc(transitions)
 
                 if args.tra:
+                    os.makedirs(os.path.dirname(args.tra), exist_ok=True)
                     with open(args.tra, "w") as f:
                         sys.stdout = f  # Redirect stdout to file
                         output_dtmc(n, t, dtmc_transitions)
@@ -103,6 +105,7 @@ def main() -> None:
                     output_dtmc(n, t, dtmc_transitions)
 
                 if args.lab:
+                    os.makedirs(os.path.dirname(args.lab), exist_ok=True)
                     with open(args.lab, "w") as f:
                         sys.stdout = f  # Redirect stdout to file
                         output_labels(labels)
@@ -111,6 +114,7 @@ def main() -> None:
                     output_labels(labels)
 
                 if args.trew:
+                    os.makedirs(os.path.dirname(args.trew), exist_ok=True)
                     with open(args.trew, "w") as f:
                         sys.stdout = f  # Redirect stdout to file
                         output_trew(t, transitions_with_info)
@@ -119,6 +123,7 @@ def main() -> None:
                 mdp_transitions = generate_mdp(transitions)
 
                 if args.tra:
+                    os.makedirs(os.path.dirname(args.tra), exist_ok=True)
                     with open(args.tra, "w") as f:
                         sys.stdout = f  # Redirect stdout to file
                         output_mdp(n, t, mdp_transitions)
@@ -127,6 +132,7 @@ def main() -> None:
                     output_mdp(n, t, mdp_transitions)
 
                 if args.lab:
+                    os.makedirs(os.path.dirname(args.lab), exist_ok=True)
                     with open(args.lab, "w") as f:
                         sys.stdout = f  # Redirect stdout to file
                         output_labels(labels)
@@ -137,6 +143,7 @@ def main() -> None:
                 ctmc_transitions = generate_ctmc(transitions)
 
                 if args.tra:
+                    os.makedirs(os.path.dirname(args.tra), exist_ok=True)
                     with open(args.tra, "w") as f:
                         sys.stdout = f  # Redirect stdout to file
                         output_ctmc(n, t, ctmc_transitions)
@@ -145,6 +152,7 @@ def main() -> None:
                     output_ctmc(n, t, ctmc_transitions)
 
                 if args.lab:
+                    os.makedirs(os.path.dirname(args.lab), exist_ok=True)
                     with open(args.lab, "w") as f:
                         sys.stdout = f  # Redirect stdout to file
                         output_labels(labels)
