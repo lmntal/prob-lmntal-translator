@@ -80,12 +80,18 @@ def output_mdp(n: int, t: int, mdp_transitions: List[TransitionForMDP]) -> None:
     """
     # Prepare output
     output_lines = []
-    output_lines.append(f"{n} {t}")
+    choice_count = 0
+    choice_bf = -1
+
     for from_state, choice_id, to_state, prob, _ in sorted(mdp_transitions):
         prob_str = round_sig_6(prob)
+        if choice_id != choice_bf:
+            choice_count += 1
+            choice_bf = choice_id
         output_lines.append(f"{from_state} {choice_id} {to_state} {prob_str}")
 
     # Print output
+    print(f"{n} {choice_count} {t}")
     print("\n".join(output_lines))
 
 
