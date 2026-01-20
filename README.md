@@ -1,6 +1,6 @@
 # Prob LMNtal Translator
 
-確率モデルを表現した LMNtal モデルのメタインタプリタ ([prob-lmntal-interpreter](https://github.com/lmntal/prob-lmntal-interpreter)) の出力を，確率モデル検査器 PRISM の入力形式 (Explicit Model) に変換するツールです．
+確率モデルを表現した LMNtal モデルのメタインタプリタ ([prob-lmntal-interpreter](https://github.com/lmntal/prob-lmntal-interpreter)) の出力を，確率モデル検査器 [PRISM](https://www.prismmodelchecker.org/) の入力形式 (Explicit Model) に変換するツールです．
 
 ## 前提条件
 
